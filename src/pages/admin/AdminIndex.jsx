@@ -1,7 +1,27 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { httpRequest_axios, VITE_SERVER_HOST } from "../../api/api";
+import { useState } from "react";
 
 function AdminIndex() {
+
+    const [name, setName] = useState('기본값');
+
+    const getServerData = () => {
+
+        // API 통신 성공 시 콜백함수 (여기서 성공 후처리, 데이터 핸들링 하면 됨)
+        function success(data) {
+            setName(data.name);
+        }
+        
+        // API 통신 실패 시 콜백함수 (여기서 실패 후처리, 에러 핸들링 하면 됨)
+        function fail(err) {
+            alert("통신실패"+ err);
+        }
+
+        httpRequest_axios(`${VITE_SERVER_HOST}/api/admin`, "GET", null, success, fail);
+    };
+
     return (
         <>
             <p>관리자페이지 입니당</p>
@@ -20,6 +40,15 @@ function AdminIndex() {
             <br/>
             <br/>
             <Link to='/'>메인페이지로 이동</Link>
+
+            <br/>
+            <br/>
+            <br/>
+            <button onClick={getServerData}>서버에 관리자 정보 요청</button>
+            <button onClick={()=> setName('기본값')}>초기화</button>
+
+            <p>관리자명: {name}</p>
+
         </>
     )
 }
