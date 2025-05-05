@@ -7,13 +7,13 @@ import { useState } from "react";
 
 function Index() {
 
-    const [name, setName] = useState('기본값');
+    const [test, setTest] = useState(null);
 
     const getServerData = () => {
 
         // API 통신 성공 시 콜백함수 (여기서 성공 후처리, 데이터 핸들링 하면 됨)
         function success(data) {
-            setName(data.name);
+            setTest(data);
         }
         
         // API 통신 실패 시 콜백함수 (여기서 실패 후처리, 에러 핸들링 하면 됨)
@@ -48,9 +48,15 @@ function Index() {
             <br/>
             <br/>
             <button onClick={getServerData}>서버에 회원 정보 요청</button>
-            <button onClick={()=> setName('기본값')}>초기화</button>
+            <button onClick={()=> setTest(null)}>초기화</button>
 
-            <p>회원명: {name}</p>
+            {/* test 정보가 존재할 때에만 표시 */}
+            {test && (
+                <>
+                    <p>번호: {test.id}</p>
+                    <p>회원명: {test.name}</p>
+                </>
+            )}
         </>
     );
 };
