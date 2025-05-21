@@ -1,17 +1,17 @@
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { httpRequest, httpRequest_axios, VITE_SERVER_HOST } from "../../api/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from './Cart.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTruckFast, faFileLines } from "@fortawesome/free-solid-svg-icons";
 
 function Cart() {
+    const navigate = useNavigate();
 
     const [carts, setCarts] = useState([]);
-    const [pagination, setPagination] = useState(null);
-    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const checkAll = useRef(null);
 
     // 선택한 장바구니 목록
     const [selectedCartNos, setSelectedCartNos] = useState([]);
@@ -23,7 +23,7 @@ function Cart() {
 
     const handleImageOnError = (e) =>{
         e.target.src = "/gubi_null.png";
-    }
+    };
 
     // 장바구니 전체 선택
     const handleSelectAll = (e) => {
@@ -37,7 +37,7 @@ function Cart() {
         else {
             setSelectedCartNos([]);
         }
-    }
+    };
 
     // 장바구니 1개 선택
     const handleSelectCart = (cartNo) => {
@@ -73,7 +73,7 @@ function Cart() {
         setTotalPrice(totalPriceResult);
         setTotalPoint(totalPointResult);
         setTotalDelivery(totalDeliveryResult);
-    }
+    };
 
     // 장바구니 개수 수정
     const handleCntChange = (cartNo, cnt) => {
@@ -109,7 +109,8 @@ function Cart() {
         
         // API 통신 성공 시 콜백함수
         function success(data) {
-            fetchCarts();
+            setCarts((prevCarts) => prevCarts.filter((cart) => cart.cartNo !== cartNo));
+            setSelectedCartNos((prevCartNos) => prevCartNos.filter((selectedCartNo) => selectedCartNo !== cartNo));
         }
         
         // API 통신 실패 시 콜백함수
@@ -125,8 +126,10 @@ function Cart() {
                 });
         }
 
+        console.log(cartNo);
+
         httpRequest(`${VITE_SERVER_HOST}/api/carts/${cartNo}`, "DELETE", null, success, fail);
-    }
+    };
 
     // 장바구니 목록 조회
     const fetchCarts = async () => {
@@ -136,9 +139,12 @@ function Cart() {
             setCarts(data.carts.sort((a, b) => {
                 return b.optionInStock - a.optionInStock; // 재고가 있는 상품이 먼저 오도록 정렬
             }));
-            setPagination(data.pagenation);
             setLoading(false);
 
+            // 기본으로 전체 선택
+            setSelectedCartNos(data.carts
+                .filter(cart => cart.optionInStock)
+                .map(cart => cart.cartNo));
         }
         
         // API 통신 실패 시 콜백함수
@@ -149,10 +155,17 @@ function Cart() {
         setLoading(true);
         const params = new URLSearchParams();   // 쿼리스트링 객체 생성
         params.append("userNo", 1);
-        params.append("page", page);
 
         httpRequest_axios(`${VITE_SERVER_HOST}/api/carts?${params.toString()}`, "GET", null, success, fail);
     };
+
+    // 주문 페이지로 이동
+    const goToOrderPage = () => {
+        const params = new URLSearchParams();   // 쿼리스트링 객체 생성
+        params.append("cartNoList", selectedCartNos);
+
+        navigate(`/checkout?${params}`);
+    }
 
     useEffect(() => {
 
@@ -169,7 +182,7 @@ function Cart() {
         if(!loading && carts) {
             calculateTotal();
         }
-    }, [selectedCartNos, carts])
+    }, [selectedCartNos, carts]);
 
     return (
         <>
@@ -181,15 +194,15 @@ function Cart() {
 
                         {/* 장바구니 상품 목록 출력 */}
                         {loading ? (
-                            <p>로딩중..</p>
+                            <p>Loading...</p>
                         ) : carts.length === 0 ? (
                             <p>장바구니에 담긴 상품이 없습니다.</p>
                         ) : (
                             <>
                                 {/* 전체 선택 체크박스 */}
-                                <input type="checkbox" className={styles.checkbox} style={{marginLeft:'20px', marginRight:'10px'}} onChange={handleSelectAll}
+                                <input type="checkbox" ref={checkAll} id="check-all" className={styles.checkbox} style={{marginLeft:'20px', marginRight:'10px'}} onChange={handleSelectAll}
                                 checked={selectedCartNos.length === carts.filter((cart)=>cart.optionInStock).length}/>
-                                <label for="check-all">Select all items</label>
+                                <label htmlFor="check-all" style={{cursor:'pointer'}}>Select all items</label>
 
                                 <ul>
                                     {carts.map((cart) => (
@@ -224,19 +237,20 @@ function Cart() {
                         )}
                     </div>
                     <div className="offset-lg-1 col-lg-5 px-4 py-4">
-                        <div className="h5 mb-4">Order details</div>
-                        <div className={`${styles.flex} mb-2`} style={{fontSize: '11pt', color: 'rgb(85, 85, 85)'}}>
-                            <span>Delivery</span>
-                                <span style={{display:'none'}}>Free</span>
-                                <span id="totalDelivery">₩&nbsp;{totalDelivery.toLocaleString('ko-KR')}</span>
-                        </div>
-                        <div className={styles.flex} style={{fontWeight: 600}}><span>Amount total</span><span id="totalPrice">₩&nbsp;{totalPrice.toLocaleString('ko-KR')}</span></div>
-                        <div className={styles.flex} style={{fontSize: '11pt', color: 'rgb(85, 85, 85)'}}><span>Reward Points</span><span id="totalPoint">{totalPoint.toLocaleString('ko-KR')}P</span></div>
-                        
-                        <hr/>
+                        <div className="position-sticky" style={{top:'4.1rem'}}>
+                            <div className="h5 mb-4">Order details</div>
+                            <div className={`${styles.flex} mb-2`} style={{fontSize: '11pt', color: 'rgb(85, 85, 85)'}}>
+                                <span>Delivery</span>
+                                <span id="totalDelivery">{totalDelivery == 0 ? 'Free' : '₩ '+ totalDelivery.toLocaleString('ko-KR')}</span>
+                            </div>
+                            <div className={styles.flex} style={{fontWeight: 600}}><span>Amount total</span><span id="totalPrice">₩&nbsp;{totalPrice.toLocaleString('ko-KR')}</span></div>
+                            <div className={styles.flex} style={{fontSize: '11pt', color: 'rgb(85, 85, 85)'}}><span>Reward Points</span><span id="totalPoint">{totalPoint.toLocaleString('ko-KR')}P</span></div>
+                            
+                            <hr/>
 
-                        <button className={styles.goCheckoutBtn} type="button" >Secure Checkout</button>{/* 폼 전송 버튼 */}
-                        <button className={styles.goProductsBtn} type="button" >Continue shopping</button>{/* 상품목록 페이지로 돌아가기 */}
+                            <button className={styles.goCheckoutBtn} type="button" onClick={e => goToOrderPage()}>Secure Checkout ({selectedCartNos.length})</button>{/* 폼 전송 버튼 */}
+                            <button className={styles.goProductsBtn} type="button" >Continue shopping</button>{/* 상품목록 페이지로 돌아가기 */}
+                        </div>
                     </div>
                 </div>
 
