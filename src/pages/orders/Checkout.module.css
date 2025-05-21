@@ -1,0 +1,247 @@
+@charset "UTF-8";
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+
+.container *:not(i) {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.container ul {
+    padding: 0;
+}
+
+.container li {
+    list-style-type: none;
+}
+
+.container ul label {
+    display: block;
+    margin: 0;
+    font-size: 11pt;
+    color: rgb(85, 85, 85);
+}
+
+.checkoutHeaderContainer {
+    text-align: center;
+    font-size: 11pt;
+}
+
+.checkoutOrderContainer {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 0px;
+    background-color: white;
+    position: relative;
+}
+.checkoutOrderContainer::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: rgb(217, 217, 217);
+}
+.checkoutOrderContainer::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background-color: black;
+}
+
+.checkoutProductContainer{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 0px;
+    background-color: white;
+}
+
+.input {
+    margin: 0;
+    border: 0;
+    border-bottom: solid 1px #ccc;
+    border-color: #ccc;
+    width: 100%;
+    font-size: 11pt;
+}
+
+.input {
+    outline: none;
+/*     border-color: black; */
+}
+
+.checkbox {
+    appearance: none; /* 기본(네이티브) 모양을 제거 */
+    box-sizing: border-box;
+    background-clip: content-box;
+    padding: 2px !important;
+    height: 15px;
+    aspect-ratio: 1;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+.checkbox:checked {
+    border-color: black;
+    background-color: black;
+}
+
+.productContainer {
+    background-color: rgb(242, 240, 235);
+    padding: 20px;
+}
+
+.productImgContainer > img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+}
+
+.productInfoContainer {
+    width: calc(100% - 130px);
+    margin: auto 0;
+}
+
+.productName {
+    width: 100%;
+    font-size: 11pt;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 원하는 라인수 */
+    -webkit-box-orient: vertical;
+}
+
+/* 상품 삭제 버튼 */
+.deleteProductBtn {
+    position: absolute;
+    top:1rem;
+    right:0.8rem;
+    background: 0;
+    border: 0;
+    line-height: 1;
+    color: rgb(85, 85, 85);
+}
+
+/* 상품 개수 조절 버튼 */
+.productPlusBtn,
+.productMinusBtn {
+    background: 0;
+    border: 0;
+    padding: 0, 30px;
+    font-size: 9pt;
+}
+
+.productOption {
+    font-size: 10pt;
+    color: rgb(85, 85, 85);
+    font-weight: 300;
+}
+
+.point {
+    color: rgb(85, 85, 85);
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.productCnt {
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.inStock {
+    font-size: 8pt;
+    font-weight: 400;
+}
+
+.productPrice {
+    font-weight: 400;
+}
+
+/* Secure Checkout 버튼 */
+.goCheckoutBtn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    border: solid 1px black;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    padding: 12px 45px;
+    font-size: 10pt;
+    transition: 0.3s;
+}
+
+.goCheckoutBtn:hover {
+    color: black;
+    background-color: white;
+}
+
+/* 좌우 정렬 */
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.flex > span {
+    display: inline-block;
+}
+
+.nextPrevButtonContainer {
+    display: flex;
+    justify-content: right;
+}
+
+.nextPrevButtonContainer button {
+    display: block;
+    margin: 40px 0;
+    border: solid 1px black;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    padding: 12px 45px;
+    font-size: 10pt;
+    transition: 0.3s;
+}
+
+.nextPrevButtonContainer button:hover {
+    color: black;
+    background-color: white;
+}
+
+.nextPrevButtonContainer #PrevButton {
+    display: none;
+}
+
+/* 배송지 선택 버튼 */
+.selectDelivery {
+    margin-left: 1rem;
+    padding: 3px 10px;
+	border: solid 1px #ccc;
+	color: rgb(85, 85, 85);
+	background-color: white;
+	font-size: 11pt;
+	border-radius: 5px;
+	transition: all 0.3s;
+}
+.selectDelivery:hover {
+	border: solid 1px rgb(85, 85, 85);
+}
+
+/* 배송지가 없다는 내용 */
+.deliveryEmpty {
+	font-size: 11pt;
+	color: rgb(85, 85, 85);
+}
