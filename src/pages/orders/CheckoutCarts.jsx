@@ -1,10 +1,8 @@
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-import { httpRequest, httpRequest_axios, VITE_SERVER_HOST } from "../../api/api";
-import { useEffect, useState, useRef } from "react";
-import styles from './OrderCart.module.css';
+import { httpRequest_axios, VITE_SERVER_HOST } from "../../api/api";
+import { useEffect, useState } from "react";
+import styles from './CheckoutCarts.module.css';
 
-function OrderCart({cartNoList}) {
+function CheckoutCarts({cartNoList, usePoint, setProductName, amountPaid, setAmountPaid}) {
 
     const [carts, setCarts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -51,11 +49,21 @@ function OrderCart({cartNoList}) {
                 return b.optionInStock - a.optionInStock; // 재고가 있는 상품이 먼저 오도록 정렬
             }));
             setLoading(false);
+
+            // 결제시 상품명 (12글자 이하로 설정)
+            let prodName = `${data.carts[0].productName} - ${data.carts[0].optionName}`;
+            if(prodName.length>12) {
+                prodName = prodName.substring(0, 9);
+                prodName = prodName + `...`;
+            }
+            prodName = prodName + ` 외 ${data.carts.length - 1}개 상품`;
+            setProductName(prodName);
         }
         
         // API 통신 실패 시 콜백함수
         function fail(err) {
-            alert("통신실패"+ err);
+            alert("주문할 상품이 없거나 이미 완료되었습니다.");
+            history.back();
         }
         
         setLoading(true);
@@ -67,8 +75,6 @@ function OrderCart({cartNoList}) {
     };
 
     useEffect(() => {
-
-        document.title = "GUBI - 장바구니";
 
         fetchCarts();
 
@@ -83,8 +89,16 @@ function OrderCart({cartNoList}) {
         }
     }, [carts]);
 
+    useEffect(() => {
+        if(usePoint != null) {
+            setAmountPaid(totalPrice - usePoint);
+        }
+    }, [usePoint, totalPrice]);
+
     return (
         <>
+            <div className="h6 mb-2">ORDER SUMMARY</div>
+            <hr/>
             {loading ? (
                 <p>Loading...</p>
             ) : carts.length === 0 ? (
@@ -119,8 +133,15 @@ function OrderCart({cartNoList}) {
             </div>
             <div className={styles.flex} style={{fontWeight: 600}}><span>Amount total</span><span id="totalPrice">₩&nbsp;{totalPrice.toLocaleString('ko-KR')}</span></div>
             <div className={styles.flex} style={{fontSize: '11pt', color: 'rgb(85, 85, 85)'}}><span>Reward Points</span><span id="totalPoint">{totalPoint.toLocaleString('ko-KR')}P</span></div>
+            {usePoint != null && (
+                <>
+                    <hr/>
+                    <div className={styles.flex} style={{fontSize: '11pt', fontWeight: 600}}><span>Use Points</span><span id="usePointResult">{usePoint.toLocaleString('ko-KR')}P</span></div>
+                    <div className={styles.flex} style={{fontSize: '11pt', fontWeight: 600}}><span>Amount Paid</span><span id="amountPaid">₩&nbsp;{amountPaid.toLocaleString('ko-KR')}</span></div>
+                </>
+            )}
         </>
     )
 }
 
-export default OrderCart;
+export default CheckoutCarts;

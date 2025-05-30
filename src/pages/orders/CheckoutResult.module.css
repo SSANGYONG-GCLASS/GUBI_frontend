@@ -12,36 +12,41 @@
 
 @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
 
-.container *:not(i) {
+.checkoutResultContainer {
+	padding-top: 100px;
+    font-weight: 400;
+}
+
+.checkoutResultContainer * {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.container ul {
+.checkoutResultContainer ul {
     padding: 0;
 }
 
-.container li {
+.checkoutResultContainer li {
     list-style-type: none;
 }
 
-.container ul label {
+.checkoutResultContainer ul label {
     display: block;
     margin: 0;
     font-size: 11pt;
     color: rgb(85, 85, 85);
 }
 
-.checkoutHeaderContainer {
+.CheckoutHeaderContainer {
     text-align: center;
     font-size: 11pt;
 }
 
-.checkoutOrderContainer {
+.CheckoutOrderContainer {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 0px;
     background-color: white;
     position: relative;
 }
-.checkoutOrderContainer::before {
+.CheckoutOrderContainer::before {
     content: "";
     display: block;
     position: absolute;
@@ -51,35 +56,31 @@
     height: 3px;
     background-color: rgb(217, 217, 217);
 }
-.checkoutOrderContainer::after {
+.CheckoutOrderContainer::after {
     content: "";
     display: block;
     position: absolute;
     top: -3px;
     left: 0;
-    width: var(--progress);
-    transition: 0.3s;
+    width: 50%;
     height: 3px;
     background-color: black;
 }
 
-.checkoutProductContainer{
+.CheckoutProductContainer{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 0px;
     background-color: white;
 }
 
-.input {
-    margin: 0;
-    border: 0;
-    border-bottom: solid 1px #ccc;
-    border-color: #ccc;
-    width: 100%;
-    font-size: 11pt;
+.ProductImgContainer > img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
 }
 
-.input {
-    outline: none;
-/*     border-color: black; */
+.ProductInfoContainer {
+    width: calc(100% - 100px);
+    margin: auto 0;
 }
 
 /* 좌우 정렬 */
@@ -91,70 +92,60 @@
     display: inline-block;
 }
 
-/* 이전, 다음 버튼 */
-.nextPrevButtonContainer {
+.ProductName {
+    width: 100%;
+    font-size: 11pt;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    color: black;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 원하는 라인수 */
+    -webkit-box-orient: vertical;
+}
+
+.ProductOption,
+.ProductCnt {
+    font-size: 10pt;
+    color: rgb(85, 85, 85);
+    font-weight: 300;
+}
+
+.ProductPrice {
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.buttonContainer {
     display: flex;
     justify-content: space-between;
 }
 
-.nextPrevButtonContainer button {
+.buttonContainer button {
     display: block;
     margin: 40px 0;
+    border: solid 1px black;
     border-radius: 5px;
-    padding: 12px 45px;
+    color: white;
+    background-color: black;
+    padding: 12px 0;
+    width: 240px;
     font-size: 10pt;
     transition: 0.3s;
 }
 
-.nextPrevButtonContainer .NextButton {
-    border: solid 1px black;
-    color: white;
-    background-color: black;
-}
-
-.nextPrevButtonContainer .NextButton:hover {
+.buttonContainer .white {
     color: black;
     background-color: white;
 }
 
-.nextPrevButtonContainer .PrevButton {
-    border: solid 1px black;
+.buttonContainer button:hover {
     color: black;
     background-color: white;
 }
-
-.nextPrevButtonContainer .PrevButton:hover {
+.buttonContainer .white:hover {
     color: white;
     background-color: black;
-}
-
-/* 배송지 선택 버튼 */
-.selectDelivery {
-    margin-left: 1rem;
-    padding: 3px 10px;
-	border: solid 1px #ccc;
-	color: rgb(85, 85, 85);
-	background-color: white;
-	font-size: 11pt;
-	border-radius: 5px;
-	transition: all 0.3s;
-}
-.selectDelivery:hover {
-	border: solid 1px rgb(85, 85, 85);
-}
-
-/* 배송지가 없다는 내용 */
-.deliveryEmpty {
-	font-size: 11pt;
-	color: rgb(85, 85, 85);
-}
-
-/* 포인트 전액 사용 버튼 */
-.useAllPointBtn {
-    border: solid 0px black;
-    font-size: 10pt;
-    width: 90px;
-    height: 20px;
-    padding: 0;
-    color: #333;
 }
