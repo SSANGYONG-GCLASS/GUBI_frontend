@@ -1,42 +1,54 @@
-import { Link, useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
-import { httpRequest_axios, VITE_SERVER_HOST } from "../../api/api";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { httpRequest, VITE_SERVER_HOST } from "../../api/api";
 import styles from './Checkout.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruckFast, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import OrderCart from "./OrderCarts";
+import CheckoutCarts from "./CheckoutCarts";
+import CheckoutUserDetails from "./CheckoutUserDetails";
+import CheckoutUsePoints from "./CheckoutUsePoints";
+import CheckoutPayment from "./CheckoutPayment";
 
-function AdminIndex() {
+function Checkout() {
+    
+    const navigate = useNavigate();
 
     const [userDetail, setUserDetail] = useState(null);
     const [delivery, setDelivery] = useState(null);
+    const [usePoint, setUsePoint] = useState(null);
+    const [productName, setProductName] = useState(null);
+    const [amountPaid, setAmountPaid] = useState(0);
+
+    const [checkoutStep, setCheckoutStep] = useState(1);
 
     const { search } = useLocation();
     const params = new URLSearchParams(search);
-    const cartNoList = params.getAll("cartNoList");
+    const cartNoList = params.get("cartNoList");
 
-    const fetchUserDetail = () => {
+    const addOrder = () => {
 
         // API 통신 성공 시 콜백함수
         function success(data) {
-            setUserDetail(data);
+            navigate(`/checkout-result?orderNo=${data.orderNo}`);
         }
         
         // API 통신 실패 시 콜백함수
         function fail(err) {
             alert("통신실패"+ err);
         }
+                
+        // const body = JSON.stringify({"userNo":1, "deliveryNo":delivery.deliveryNo, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
+        const body = JSON.stringify({"userNo":1, "deliveryNo":1, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
 
-        const params = new URLSearchParams();   // 쿼리스트링 객체 생성
-        params.append("userNo", 1);
+        httpRequest(`${VITE_SERVER_HOST}/api/orders`, "POST", body, success, fail);
 
-        httpRequest_axios(`${VITE_SERVER_HOST}/api/orders/user-detail?${params.toString()}`, "GET", null, success, fail);
     };
 
     useEffect(() => {
-        fetchUserDetail();
-    }, []);
+        if(checkoutStep == 4) {
+            addOrder(); // 결제 진행
+        }
+    }, [checkoutStep]);
 
     return (
         <div style={{backgroundColor: "rgb(250, 250, 250)"}}>
@@ -47,73 +59,20 @@ function AdminIndex() {
                 
                 <div className="row">
                     
-                    <div className={`${styles.checkoutOrderContainer} col-lg-6 px-4 py-4`}>
-                        <div className="h6 mb-2">1/2</div>
-                        <hr/>
-                        <div className="h6 mb-4">USER DETAILS</div>
-                        {userDetail && <ul>
-                            <li className="my-2">
-                                <label>Name</label>
-                                <div id="userName">{userDetail.name}</div>
-                            </li>
-                            <li className="my-2">
-                                <label>Email</label>
-                                <div id="userEmail">{userDetail.email}</div>
-                            </li>
-                            <li className="my-2">
-                                <label>Phone number</label>
-                                <div id="userTel">{userDetail.tel}</div>
-                            </li>
-                        </ul>}
-                        <div className="h6 my-4">DELIVERY DETAILS<button className={styles.selectDelivery} type="button" >배송지 변경</button></div>
-                        
-                        <input type="hidden" name="deliveryno" value=""/>
-                        
-                        {/* 기본 배송지가 존재하면 숨기기 */}
-                        <div className={`${styles.deliveryEmpty} ${(!delivery)?'':'visually-hidden'}`}>기본 배송지가 없습니다. 배송지를 선택하세요.</div>
-                        
-                        {/* 기본 배송지가 존재하지 않으면 숨기기 */}
-                        <ul id="deliveryInfo" className={(delivery)?'':'visually-hidden'}>
-                            <li className="my-3">
-                                <label htmlFor="receiver">Name</label>
-                                <input type="text" className={styles.input} id="receiver" value="" readOnly/>
-                                {/* <!-- <span className="error">수령인 성명은 필수입력 사항입니다.</span> --> */}
-                            </li>
-                            <li className="my-3">
-                                <label htmlFor="reciver_tel">Phone number</label>
-                                <input type="text" className={styles.input} id="receiver_tel" value="" readOnly/>
-                                {/* <!-- <span className="error">휴대전화는 필수입력 사항입니다.</span> --> */}
-                            </li>
-                            <li className="my-3">
-                                <label htmlFor="postcode">Zip code / Postcode</label>
-                                <input type="text" className={styles.input} id="postcode" value="" readOnly/>
-                                {/* <!-- <span className="error">우편번호는 필수입력 사항입니다.</span> --> */}
-                            </li>
-                            <li className="my-3">
-                                <label htmlFor="address">Address line 1</label>
-                                <input type="text" className={styles.input} id="address" value="" readOnly/>
-                                {/* <!-- <span className="error">주소는 필수입력 사항입니다.</span> --> */}
-                            </li>
-                            <li className="my-3">
-                                <label htmlFor="detail_address">Address line 2</label>
-                                <input type="text" className={styles.input} id="detail_address" value="" readOnly/>
-                                {/* <!-- <span className="error">상제주소는 필수입력 사항입니다.</span> --> */}
-                            </li>
-                            <li className="my-3">
-                                <label htmlFor="memo">Additional notes for delivery</label>
-                                <input type="text" className={styles.input} id="memo" value="" readOnly/>
-                            </li>
-                        </ul>
+                    <div className={`${styles.checkoutOrderContainer} col-lg-6 px-4 py-4`}  style={{ '--progress': checkoutStep/3*100+'%' }}>
+                        {checkoutStep === 1 && <CheckoutUserDetails userDetail={userDetail} setUserDetail={setUserDetail} delivery={delivery} setDelivery={setDelivery}/>}
+                        {checkoutStep === 2 && <CheckoutUsePoints userDetail={userDetail} usePoint={usePoint} setUsePoint={setUsePoint}/>}
+                        {checkoutStep === 3 && <CheckoutPayment userDetail={userDetail} productName={productName} amountPaid={amountPaid} onPrev={() => setCheckoutStep(2)} onComplete={() => setCheckoutStep(4)} className="fade show"/>}
                     </div>
                     <div className={`${styles.checkoutProductContainer} offset-lg-1 col-lg-5 px-4 py-4`}>
-                        <div className="h6 mb-2">ORDER SUMMARY</div>
-                        <hr/>
-                        <OrderCart cartNoList={cartNoList}/>
+                        <CheckoutCarts cartNoList={cartNoList} usePoint={usePoint} setProductName={setProductName} amountPaid={amountPaid} setAmountPaid={setAmountPaid}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className={`${styles.nextPrevButtonContainer} col-lg-6 px-0`}>
-                        <button id="NextButton" type="button">Next</button>
+                        <button className={styles.PrevButton} style={{display:(checkoutStep==1)?'none':'block'}} type="button" onClick={() => setCheckoutStep((prev) => prev-1)}>Prev</button>
+                        <span></span>
+                        <button className={styles.NextButton} style={{display:(checkoutStep==3)?'none':'block'}} type="button" onClick={() => setCheckoutStep((prev) => prev+1)}>Next</button>
                     </div>
                 </div>
                 
@@ -143,4 +102,4 @@ function AdminIndex() {
     )
 }
 
-export default AdminIndex;
+export default Checkout;
