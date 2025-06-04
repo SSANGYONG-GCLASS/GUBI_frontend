@@ -16,10 +16,7 @@ function CheckoutUserDetails({userDetail, setUserDetail, delivery, setDelivery})
             alert("통신실패"+ err);
         }
 
-        const params = new URLSearchParams();   // 쿼리스트링 객체 생성
-        params.append("userNo", 1);
-
-        httpRequest_axios(`${VITE_SERVER_HOST}/api/orders/user-detail?${params.toString()}`, "GET", null, success, fail);
+        httpRequest_axios(`${VITE_SERVER_HOST}/api/orders/user-detail`, "GET", null, success, fail);
     };
 
     useEffect(() => {

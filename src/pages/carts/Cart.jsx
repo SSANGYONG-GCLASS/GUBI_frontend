@@ -100,7 +100,7 @@ function Cart() {
                 });
         }
         
-        const body = JSON.stringify({"userNo":1, "cnt":cnt});
+        const body = JSON.stringify({"cnt":cnt});
 
         httpRequest(`${VITE_SERVER_HOST}/api/carts/${cartNo}`, "PUT", body, success, fail);
     };
@@ -153,10 +153,8 @@ function Cart() {
         }
         
         setLoading(true);
-        const params = new URLSearchParams();   // 쿼리스트링 객체 생성
-        params.append("userNo", 1);
 
-        httpRequest_axios(`${VITE_SERVER_HOST}/api/carts?${params.toString()}`, "GET", null, success, fail);
+        httpRequest_axios(`${VITE_SERVER_HOST}/api/carts`, "GET", null, success, fail);
     };
 
     // 주문 페이지로 이동
