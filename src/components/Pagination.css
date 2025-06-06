@@ -1,0 +1,45 @@
+/* 페이징 숫자 처리 시작 */
+div.pagination {
+    border: solid 0px red;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+div.pagination button {
+    background: none;
+    border: none;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+}
+
+/* 현재 선택된 페이지 */
+div.pagination button.active {
+    background-color: black;
+    color: white;
+}
+
+/* 비활성화 버튼 */
+div.pagination button.disabled {
+    pointer-events: none;
+    color: #aaa;
+}
+
+/* hover 효과 */
+div.pagination button:hover:not(.active) {
+    background-color: #ddd;
+}
+/* 페이징 숫자 처리 끝 */
+
+
+/* 페이징 바 가운데정렬 */
+div.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+}

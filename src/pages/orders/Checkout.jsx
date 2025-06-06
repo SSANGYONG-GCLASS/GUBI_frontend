@@ -37,8 +37,8 @@ function Checkout() {
             alert("통신실패"+ err);
         }
                 
-        // const body = JSON.stringify({"userNo":1, "deliveryNo":delivery.deliveryNo, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
-        const body = JSON.stringify({"userNo":1, "deliveryNo":1, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
+        // const body = JSON.stringify({"deliveryNo":delivery.deliveryNo, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
+        const body = JSON.stringify({"deliveryNo":1, "usePoint":usePoint, "status":"ORDER_COMPLETED", "cartNoList":cartNoList.split(",")});
 
         httpRequest(`${VITE_SERVER_HOST}/api/orders`, "POST", body, success, fail);
 

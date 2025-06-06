@@ -68,7 +68,6 @@ function CheckoutCarts({cartNoList, usePoint, setProductName, amountPaid, setAmo
         
         setLoading(true);
         const params = new URLSearchParams();   // 쿼리스트링 객체 생성
-        params.append("userNo", 1);
         params.append("cartNoList", cartNoList);
 
         httpRequest_axios(`${VITE_SERVER_HOST}/api/carts/for-order?${params.toString()}`, "GET", null, success, fail);

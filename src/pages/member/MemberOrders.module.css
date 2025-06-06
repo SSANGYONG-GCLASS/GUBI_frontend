@@ -1,0 +1,352 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 100;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 300;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 400;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 500;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 700;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+    font-family: "Noto Sans KR";
+    font-style: normal;
+    font-weight: 900;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format("woff2"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format("woff"),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format("opentype");
+    unicode-range: U+AC00-D7A3;
+}
+
+.content *, .sidebar * {
+	font-family: 'Noto Sans KR', 'Times New Roman';
+}
+
+.content {
+    padding-top: 50px;
+    max-width: 1512px;
+    margin: 0 auto;
+}
+
+/* 컨테이너 내부 스타일 */
+.container {
+    border: solid 0px red;
+    /* 컨테이너 넓이를 적당히 설정 */
+    margin: 0 0 20px 0;
+    padding: 0 15px 0 15px;
+    background-color: white;
+}
+
+/* 제목 스타일 */
+.title {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* 테이블 스타일 */
+.table {
+    margin-top: 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    color: #333;
+    border: #00000000 !important;
+    /* 테이블 전체 경계선 제거 */
+}
+
+/* 테이블 내부 가로줄 스타일 */
+.table tbody td,
+.table th {
+    padding-top: 0.8rem !important;
+    padding-bottom: 0.8rem !important;
+    border: 0;
+}
+
+/* 사이드 바 메뉴*/
+
+.sidebar {
+    position: sticky;
+    font-size: 8px;
+    top: 50px;
+    left: 0;
+    border: solid 0px red;
+    width: 170px;
+    /* 사이드바 너비 */
+    background-color: white;
+    /* 배경색 */
+    /* padding: 15px; */
+    /* 패딩 */
+    float: left;
+    margin-left: 5px;
+}
+
+.sidebar hr {
+    border-top: 0px !important;
+    border: 1px solid black;
+    opacity: 1;
+}
+
+.sidebar h2 {
+    font-size: 0.9rem;
+    /* 제목 크기 */
+    margin-bottom: 10px;
+    /* 아래 여백 */
+    font-weight: bold;
+}
+
+.section {
+    margin-bottom: 20px;
+    /* 섹션 간 여백 */
+}
+
+.section h3 {
+    font-weight: bold;
+    font-size: 0.8rem;
+    /* 섹션 제목 크기 */
+    margin-bottom: 10px;
+    /* 아래 여백 */
+}
+
+.section ul {
+    list-style-type: none;
+    /* 리스트 스타일 제거 */
+    font-size: 0.9rem;
+    /* 섹션 제목 크기 */
+    padding: 0;
+    /* 패딩 제거 */
+}
+
+.section li {
+    margin: 5px 0;
+    /* 항목 간 여백 */
+}
+
+.section a {
+    text-decoration: none;
+    /* 링크 밑줄 제거 */
+    color: #333 !important;
+    /* 링크 색상 */
+    font-size: 0.8rem;
+    /* 섹션 제목 크기 */
+}
+
+.section a:hover {
+    text-decoration: underline;
+    /* 마우스 오버 시 밑줄 효과를 준다*/
+}
+
+.link {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.link.active {
+    font-weight: bold;
+}
+
+.content a{
+    text-decoration: none;
+    color: black;
+}
+
+.content a:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.content a.active {
+    font-weight: bold;
+}
+
+.ProductImgContainer {
+    height: 100px;
+    aspect-ratio: 4/5;
+    background-color: rgb(242, 240, 235);
+    overflow: hidden;
+    position: relative;
+}
+
+.ProductImgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.5s;
+    transform: scale(1);
+}
+
+.ProductImgContainer img:hover {
+    transform: scale(1.05);
+}
+
+.ProductOption {
+    color: #666;
+}
+
+.container h6 {
+    font-size: 0.9rem;
+    /* 제목 크기 */
+    font-weight: bold;
+}
+
+.table button {
+    display: block;
+    /*     width: 120px; */
+    margin: 10px auto;
+    border: solid 1px black;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    padding: 3px 12px;
+    font-size: 10pt;
+    transition: 0.3s;
+}
+
+.table button:hover {
+    color: white;
+    background-color: black;
+}
+
+.table button.black {
+    color: white;
+    background-color: black;
+}
+
+.table button.black:hover {
+    color: black;
+    background-color: white;
+}
+
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.start {
+    border-top: 1px solid;
+    border-color: #ddd;
+}
+
+.start th {
+    padding: 0 !important;
+}
+
+.ProductInfoContainer {
+    text-align: left;
+}
+
+.hr {
+    margin-bottom: 0;
+    border-top: 0px !important;
+    border: 1px solid black;
+    opacity: 1;
+}
+
+/* 페이지바 */
+.pagination>li {
+    border: none;
+}
+
+.pagination>li.page-item a {
+    /* border: 1px solid red; */
+    color: black;
+    font-size: 10pt;
+}
+
+.page-link {
+    border: none;
+}
+
+.page-link:active:hover {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 246, 246, 0.25);
+}
+
+.page-item.active .page-link {
+    border-bottom: 1px solid black;
+    z-index: 3;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Button wrapper */
+.modal-body .button-wrapper {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.modal-body .button-wrapper button {
+    background-color: #fff;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    height: 65px;
+}
+
+.modal-body .button-wrapper button:hover {
+    background-color: #333;
+    color: #fff;
+}
