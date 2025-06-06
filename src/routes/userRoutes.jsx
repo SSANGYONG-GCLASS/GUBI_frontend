@@ -2,6 +2,7 @@ import Index from "../pages/index/Index";
 import Cart from "../pages/carts/Cart";
 import Checkout from "../pages/orders/Checkout";
 import CheckoutResult from "../pages/orders/CheckoutResult";
+import MemberOrders from "../pages/member/MemberOrders";
 
 
 export const userRoutes = [
@@ -9,5 +10,6 @@ export const userRoutes = [
     {path: '/', element: <Index />},
     {path: '/carts', element: <Cart />},
     {path: '/checkout', element: <Checkout />},
-    {path: '/checkout-result', element: <CheckoutResult />}
+    {path: '/checkout-result', element: <CheckoutResult />},
+    {path: '/member/orders', element: <MemberOrders />}
 ];

@@ -126,8 +126,6 @@ function Cart() {
                 });
         }
 
-        console.log(cartNo);
-
         httpRequest(`${VITE_SERVER_HOST}/api/carts/${cartNo}`, "DELETE", null, success, fail);
     };
 
@@ -246,7 +244,7 @@ function Cart() {
                             
                             <hr/>
 
-                            <button className={styles.goCheckoutBtn} type="button" onClick={e => goToOrderPage()}>Secure Checkout ({selectedCartNos.length})</button>{/* 폼 전송 버튼 */}
+                            {selectedCartNos.length > 0 && <button className={styles.goCheckoutBtn} type="button" onClick={e => goToOrderPage()}>Secure Checkout ({selectedCartNos.length})</button>}{/* 폼 전송 버튼 */}
                             <button className={styles.goProductsBtn} type="button" >Continue shopping</button>{/* 상품목록 페이지로 돌아가기 */}
                         </div>
                     </div>
