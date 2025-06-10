@@ -16,10 +16,7 @@ function CheckoutUserDetails({userDetail, setUserDetail, delivery, setDelivery})
             alert("통신실패"+ err);
         }
 
-        const params = new URLSearchParams();   // 쿼리스트링 객체 생성
-        params.append("userNo", 1);
-
-        httpRequest_axios(`${VITE_SERVER_HOST}/api/orders/user-detail?${params.toString()}`, "GET", null, success, fail);
+        httpRequest_axios(`${VITE_SERVER_HOST}/api/orders/user-detail`, "GET", null, success, fail);
     };
 
     useEffect(() => {
@@ -51,43 +48,44 @@ function CheckoutUserDetails({userDetail, setUserDetail, delivery, setDelivery})
             </ul>}
             <div className="h6 my-4">DELIVERY DETAILS<button className={styles.selectDelivery} type="button" >배송지 변경</button></div>
             
-            <input type="hidden" name="deliveryno" value=""/>
-            
             {/* 기본 배송지가 존재하면 숨기기 */}
-            <div className={`${styles.deliveryEmpty} ${(!delivery)?'':'visually-hidden'}`}>기본 배송지가 없습니다. 배송지를 선택하세요.</div>
-            
+            {!delivery && <div className={styles.deliveryEmpty}>기본 배송지가 없습니다. 배송지를 선택하세요.</div>}
+                
             {/* 기본 배송지가 존재하지 않으면 숨기기 */}
-            <ul id="deliveryInfo" className={(delivery)?'':'visually-hidden'}>
-                <li className="my-3">
-                    <label htmlFor="receiver">Name</label>
-                    <input type="text" className={styles.input} id="receiver" value="" readOnly/>
-                    {/* <!-- <span className="error">수령인 성명은 필수입력 사항입니다.</span> --> */}
-                </li>
-                <li className="my-3">
-                    <label htmlFor="reciver_tel">Phone number</label>
-                    <input type="text" className={styles.input} id="receiver_tel" value="" readOnly/>
-                    {/* <!-- <span className="error">휴대전화는 필수입력 사항입니다.</span> --> */}
-                </li>
-                <li className="my-3">
-                    <label htmlFor="postcode">Zip code / Postcode</label>
-                    <input type="text" className={styles.input} id="postcode" value="" readOnly/>
-                    {/* <!-- <span className="error">우편번호는 필수입력 사항입니다.</span> --> */}
-                </li>
-                <li className="my-3">
-                    <label htmlFor="address">Address line 1</label>
-                    <input type="text" className={styles.input} id="address" value="" readOnly/>
-                    {/* <!-- <span className="error">주소는 필수입력 사항입니다.</span> --> */}
-                </li>
-                <li className="my-3">
-                    <label htmlFor="detail_address">Address line 2</label>
-                    <input type="text" className={styles.input} id="detail_address" value="" readOnly/>
-                    {/* <!-- <span className="error">상제주소는 필수입력 사항입니다.</span> --> */}
-                </li>
-                <li className="my-3">
-                    <label htmlFor="memo">Additional notes for delivery</label>
-                    <input type="text" className={styles.input} id="memo" value="" readOnly/>
-                </li>
-            </ul>
+            {delivery &&
+                <ul id="deliveryInfo">
+                    <li className="my-3">
+                        <label htmlFor="receiver">Name</label>
+                        <input type="text" className={styles.input} id="receiver" value="" readOnly/>
+                        {/* <!-- <span className="error">수령인 성명은 필수입력 사항입니다.</span> --> */}
+                    </li>
+                    <li className="my-3">
+                        <label htmlFor="reciver_tel">Phone number</label>
+                        <input type="text" className={styles.input} id="receiver_tel" value="" readOnly/>
+                        {/* <!-- <span className="error">휴대전화는 필수입력 사항입니다.</span> --> */}
+                    </li>
+                    <li className="my-3">
+                        <label htmlFor="postcode">Zip code / Postcode</label>
+                        <input type="text" className={styles.input} id="postcode" value="" readOnly/>
+                        {/* <!-- <span className="error">우편번호는 필수입력 사항입니다.</span> --> */}
+                    </li>
+                    <li className="my-3">
+                        <label htmlFor="address">Address line 1</label>
+                        <input type="text" className={styles.input} id="address" value="" readOnly/>
+                        {/* <!-- <span className="error">주소는 필수입력 사항입니다.</span> --> */}
+                    </li>
+                    <li className="my-3">
+                        <label htmlFor="detail_address">Address line 2</label>
+                        <input type="text" className={styles.input} id="detail_address" value="" readOnly/>
+                        {/* <!-- <span className="error">상제주소는 필수입력 사항입니다.</span> --> */}
+                    </li>
+                    <li className="my-3">
+                        <label htmlFor="memo">Additional notes for delivery</label>
+                        <input type="text" className={styles.input} id="memo" value="" readOnly/>
+                    </li>
+                </ul>
+            }
+            
         </>
     )
 }
